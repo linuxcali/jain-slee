@@ -423,6 +423,9 @@ public class DeployableUnitJarComponentBuilder {
 				} else // unzip files
 				{
 					File file = new File(dstDir, entry.getName());
+					if (!file.toPath().normalize().startsWith(dstDir.toPath().normalize())) {
+						throw new IOException("Bad zip entry");
+					}
 					File dir = file.getParentFile();
 					if (!dir.exists()) {
 						if (!dir.mkdirs()) {
